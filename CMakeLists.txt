@@ -8,8 +8,7 @@ set(SOURCES
 
     src/Utils/bufferedbitmap.h
     src/Utils/cv-wx-converter.h
-    # src/Utils/convertmattowxbmp.h
-    # src/Utils/convertmattowxbmp.cpp
+    src/Utils/DataController.h
 
     src/Constants/adjustmentType.h                       
                                       

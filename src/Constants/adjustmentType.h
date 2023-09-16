@@ -1,5 +1,6 @@
 #pragma once
 
+#include <vector>
 enum class AdjustmentType
 {
     isGrayScale = 0,

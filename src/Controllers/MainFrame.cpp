@@ -96,47 +96,7 @@ void MainFrame::OnImageAdjustment(ImageAdjustmentsEvent &event)
     AdjustmentType type = event.type;
     AdjustmentData data = event.data;
 
-    switch (type)
-    {
-    case AdjustmentType::isGrayScale:
-        imageData.isGrayScale = data;
-        break;
-    case AdjustmentType::brightness:
-        imageData.brightness = data;
-        break;
-    case AdjustmentType::contrast:
-        imageData.contrast = data;
-        break;
-    case AdjustmentType::saturation:
-        imageData.saturation = data;
-        break;
-    case AdjustmentType::emboos:
-        imageData.emboos = data;
-        break;
-    case AdjustmentType::hue:
-        imageData.hue = data;
-        break;
-    case AdjustmentType::vibarance:
-        imageData.vibarance = data;
-        break;
-    case AdjustmentType::sharpness:
-        imageData.sharpness = data;
-        break;
-    case AdjustmentType::blur:
-        imageData.blur = data;
-        break;
-    case AdjustmentType::noise:
-        imageData.noise = data;
-        break;
-    case AdjustmentType::pixelate:
-        imageData.pixelate = data;
-        break;
-    case AdjustmentType::gamma:
-        imageData.gamma = data;
-        break;
-    default:
-        break;
-    }
+    imageData[type] = data;
 
     SetImageData();
 }
@@ -151,6 +111,7 @@ void MainFrame::OnLoadImageButtonClick(wxCommandEvent &event)
     wxString filePath = openFileDialog.GetPath();
 
     loadedImage = wxImage(filePath);
+    curImagePath = filePath.ToStdString();
 
     if (!loadedImage.IsOk())
     {
@@ -162,33 +123,64 @@ void MainFrame::OnLoadImageButtonClick(wxCommandEvent &event)
 }
 void MainFrame::OnSaveImageButtonClick(wxCommandEvent &event)
 {
+    if (!displayImage.IsOk())
+        return;
+
+    wxFileDialog saveFileDialog(this, _("Save Image file"), "", "", ALLOWED_TYPES, wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+
+    if (saveFileDialog.ShowModal() == wxID_CANCEL)
+        return;
+
+    wxString filePath = saveFileDialog.GetPath();
+    displayImage.SaveFile(filePath);
 }
 void MainFrame::OnLoadProjectButtonClick(wxCommandEvent &event)
 {
+    wxFileDialog openFileDialog(this, _("Open Project file"), "", "", "Project Files (*.prj)|*.prj", wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+
+    if (openFileDialog.ShowModal() == wxID_CANCEL)
+        return;
+
+    wxString filePath = openFileDialog.GetPath();
+    std::string path = filePath.ToStdString();
+
+    std::pair<std::string, std::map<AdjustmentType, AdjustmentData>> readData = DataController::Read(path);
+
+    loadedImage = wxImage(readData.first);
+
+    imageData = readData.second;
+    curImagePath = readData.first;
+
+    ResetSliders();
+
+    SetImageData();
 }
 void MainFrame::OnSaveProjectButtonClick(wxCommandEvent &event)
 {
+    wxFileDialog saveFileDialog(this, _("Save Project file"), "", "", "Project Files (*.prj)|*.prj", wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+
+    if (saveFileDialog.ShowModal() == wxID_CANCEL)
+        return;
+
+    wxString filePath = saveFileDialog.GetPath();
+    std::string path = filePath.ToStdString();
+
+    DataController::Write(path, imageData, curImagePath);
 }
 void MainFrame::OnClearAdjustmentsButtonClick(wxCommandEvent &event)
 {
+    imageData.clear();
+    ResetSliders();
+    SetImageData();
 }
 void MainFrame::SetImageData()
 {
     if (!loadedImage.IsOk())
         return;
 
-    int grayScale = GetGrayScale(imageData.isGrayScale);
-    int brightness = GetBrightness(imageData.brightness);
-    int contrast = GetContrast(imageData.contrast);
-    int saturation = GetSaturation(imageData.saturation);
-    int emboos = GetEmboos(imageData.emboos);
-    int hue = GetHue(imageData.hue);
-    int vibarance = GetVibarance(imageData.vibarance);
-    int sharpness = GetSharpness(imageData.sharpness);
-    int blur = GetBlur(imageData.blur);
-    int noise = GetNoise(imageData.noise);
-    int pixelate = GetPixelate(imageData.pixelate);
-    int gamma = GetGamma(imageData.gamma);
+    int grayScale = GetGrayScale(imageData[AdjustmentType::isGrayScale]);
+    int brightness = GetBrightness(imageData[AdjustmentType::brightness]);
+    int blur = GetBlur(imageData[AdjustmentType::blur]);
 
     displayImage = loadedImage.Copy();
 
@@ -224,4 +216,20 @@ void MainFrame::DisplayImage()
     staticBitmap->Refresh();
     this->Layout();
     this->Refresh();
+}
+
+void MainFrame::ResetSliders()
+{
+    isGrayScalePanel->SetSliderValue(imageData[AdjustmentType::isGrayScale]);
+    brightnessPanel->SetSliderValue(imageData[AdjustmentType::brightness]);
+    contrastPanel->SetSliderValue(imageData[AdjustmentType::contrast]);
+    saturationPanel->SetSliderValue(imageData[AdjustmentType::saturation]);
+    emboosPanel->SetSliderValue(imageData[AdjustmentType::emboos]);
+    huePanel->SetSliderValue(imageData[AdjustmentType::hue]);
+    vibarancePanel->SetSliderValue(imageData[AdjustmentType::vibarance]);
+    sharpnessPanel->SetSliderValue(imageData[AdjustmentType::sharpness]);
+    blurPanel->SetSliderValue(imageData[AdjustmentType::blur]);
+    noisePanel->SetSliderValue(imageData[AdjustmentType::noise]);
+    pixelatePanel->SetSliderValue(imageData[AdjustmentType::pixelate]);
+    gammaPanel->SetSliderValue(imageData[AdjustmentType::gamma]);
 }

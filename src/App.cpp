@@ -12,6 +12,8 @@ public:
 
         MainFrame *mainFrame = new MainFrame();
         mainFrame->SetClientSize(1280, 720);
+        mainFrame->SetMinSize(wxSize(1280, 720));
+        mainFrame->SetPosition(wxPoint(0, 0));
         mainFrame->Show(true);
 
         return true;

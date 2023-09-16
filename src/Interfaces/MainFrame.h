@@ -6,15 +6,18 @@
 #include "ImageAdjustmentsEvent.h"
 #include "ImageAdjustments.h"
 #include "../Utils/bufferedbitmap.h"
+#include "../Utils/DataController.h"
+#include <map>
 #include "Subscriber.h"
 const std::string ALLOWED_TYPES = "Image Files (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp";
 
 class MainFrame : Subscriber<ImageAdjustmentsEvent>, public wxFrame
 {
-    ImageAdjustments imageData;
+    std::map<AdjustmentType, AdjustmentData> imageData;
 
     wxImage loadedImage;
     wxImage displayImage;
+    std::string curImagePath;
     wxStaticBitmap *staticBitmap;
 
     wxPanel *panel;
@@ -54,8 +57,11 @@ class MainFrame : Subscriber<ImageAdjustmentsEvent>, public wxFrame
     void OnSaveProjectButtonClick(wxCommandEvent &event);
     void OnClearAdjustmentsButtonClick(wxCommandEvent &event);
     void OnImageAdjustment(ImageAdjustmentsEvent &event);
+
     void SetImageData();
     void DisplayImage();
+
+    void ResetSliders();
 
 public:
     MainFrame();
