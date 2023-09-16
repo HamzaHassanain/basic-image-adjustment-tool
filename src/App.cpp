@@ -11,7 +11,7 @@ public:
         wxInitAllImageHandlers();
 
         MainFrame *mainFrame = new MainFrame();
-        mainFrame->SetClientSize(800, 600);
+        mainFrame->SetClientSize(1280, 720);
         mainFrame->Show(true);
 
         return true;

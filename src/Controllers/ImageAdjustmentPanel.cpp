@@ -18,8 +18,8 @@ ImageAdjustmentPanel::ImageAdjustmentPanel(wxWindow *parent, Subscriber<ImageAdj
     hSizer->Add(slider, 4, wxEXPAND | wxALL, 5);
     hSizer->Add(checkBox, 1, wxEXPAND | wxALL, 5);
 
-    sizer->Add(this->label, 0, wxEXPAND | wxALL, 5);
-    sizer->Add(hSizer, 0, wxEXPAND | wxALL, 5);
+    sizer->Add(this->label, 0, wxEXPAND);
+    sizer->Add(hSizer, 0, wxEXPAND);
 
     this->SetSizerAndFit(sizer);
 

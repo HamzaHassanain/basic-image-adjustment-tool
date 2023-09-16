@@ -12,7 +12,7 @@ int GetBrightness(AdjustmentData data)
     int value = data.value;
     if (enabled)
         return value;
-    return INT_MAX;
+    return 0;
 }
 int GetContrast(AdjustmentData data)
 {
@@ -20,7 +20,7 @@ int GetContrast(AdjustmentData data)
     int value = data.value;
     if (enabled)
         return value;
-    return INT_MAX;
+    return 0;
 }
 int GetSaturation(AdjustmentData data)
 {
@@ -28,7 +28,7 @@ int GetSaturation(AdjustmentData data)
     int value = data.value;
     if (enabled)
         return value;
-    return INT_MAX;
+    return 0;
 }
 int GetEmboos(AdjustmentData data)
 {
@@ -36,7 +36,7 @@ int GetEmboos(AdjustmentData data)
     int value = data.value;
     if (enabled)
         return value;
-    return INT_MAX;
+    return 0;
 }
 int GetHue(AdjustmentData data)
 {
@@ -44,7 +44,7 @@ int GetHue(AdjustmentData data)
     int value = data.value;
     if (enabled)
         return value;
-    return INT_MAX;
+    return 0;
 }
 int GetVibarance(AdjustmentData data)
 {
@@ -52,7 +52,7 @@ int GetVibarance(AdjustmentData data)
     int value = data.value;
     if (enabled)
         return value;
-    return INT_MAX;
+    return 0;
 }
 int GetSharpness(AdjustmentData data)
 {
@@ -60,7 +60,7 @@ int GetSharpness(AdjustmentData data)
     int value = data.value;
     if (enabled)
         return value;
-    return INT_MAX;
+    return 0;
 }
 int GetBlur(AdjustmentData data)
 {
@@ -68,7 +68,7 @@ int GetBlur(AdjustmentData data)
     int value = data.value;
     if (enabled)
         return value;
-    return INT_MAX;
+    return 0;
 }
 int GetNoise(AdjustmentData data)
 {
@@ -76,7 +76,7 @@ int GetNoise(AdjustmentData data)
     int value = data.value;
     if (enabled)
         return value;
-    return INT_MAX;
+    return 0;
 }
 int GetPixelate(AdjustmentData data)
 {
@@ -84,7 +84,7 @@ int GetPixelate(AdjustmentData data)
     int value = data.value;
     if (enabled)
         return value;
-    return INT_MAX;
+    return 0;
 }
 int GetGamma(AdjustmentData data)
 {
@@ -92,5 +92,5 @@ int GetGamma(AdjustmentData data)
     int value = data.value;
     if (enabled)
         return value;
-    return INT_MAX;
+    return 0;
 }

@@ -6,15 +6,22 @@ find_package(OpenCV 4.2 REQUIRED)
 
 set(SOURCES
 
-  src/Constants/adjustmentType.h
+    src/Utils/bufferedbitmap.h
+    src/Utils/cv-wx-converter.h
+    # src/Utils/convertmattowxbmp.h
+    # src/Utils/convertmattowxbmp.cpp
 
-    src/Interfaces/AdjustmentData.h
-    src/Interfaces/AdjustmentTypesConverter.h
-    src/Interfaces/ImageAdjustmentPanel.h
-    src/Interfaces/ImageAdjustments.h
-    src/Interfaces/ImageAdjustmentsEvent.h
-    src/Interfaces/MainFrame.h
-
+    src/Constants/adjustmentType.h                       
+                                      
+    src/Interfaces/AdjustmentData.h                             
+    src/Interfaces/AdjustmentTypesConverter.h                               
+    src/Interfaces/AdjustmentTypesConverter.h                         
+    src/Interfaces/ImageAdjustmentPanel.h                
+    src/Interfaces/ImageAdjustments.h                            
+    src/Interfaces/ImageAdjustmentsEvent.h                  
+    src/Interfaces/MainFrame.h                       
+                                                                 
+    src/Controllers/AdjustmentTypesConverter.cpp           
     src/Controllers/AdjustmentTypesConverter.cpp
     src/Controllers/ImageAdjustmentPanel.cpp
     src/Controllers/ImageAdjustmentsEvent.cpp

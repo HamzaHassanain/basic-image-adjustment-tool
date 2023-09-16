@@ -14,7 +14,8 @@ class MainFrame : Subscriber<ImageAdjustmentsEvent>, public wxFrame
     ImageAdjustments imageData;
 
     wxImage loadedImage;
-    BufferedBitmap *staticBitmap;
+    wxImage displayImage;
+    wxStaticBitmap *staticBitmap;
 
     wxPanel *panel;
     wxScrolled<wxPanel> *adjustmentsPanel;
@@ -54,6 +55,7 @@ class MainFrame : Subscriber<ImageAdjustmentsEvent>, public wxFrame
     void OnClearAdjustmentsButtonClick(wxCommandEvent &event);
     void OnImageAdjustment(ImageAdjustmentsEvent &event);
     void SetImageData();
+    void DisplayImage();
 
 public:
     MainFrame();
