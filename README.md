@@ -1,6 +1,6 @@
 # Basic Image Adjustment Tool
 
-### What is thae program is all about:
+### What is the program is all about:
 
 This program is about applying basic image filters using OpenCV. I implemented:
 
