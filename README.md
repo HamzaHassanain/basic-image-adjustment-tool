@@ -4,7 +4,7 @@
 
 This program is about applying basic image filters using OpenCV. I implemented:
 
-- Chaning Image to Grayscale
+- Changing Image to Grayscale
 - Adjusting Brightness
 - Adjusting Contrast
 - Adjusting Hue
