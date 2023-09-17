@@ -1,6 +1,21 @@
 # Simple Photo Editor
 
-### Note: You have to get wxWidgets and OpenCV built and ready to use before trying to compile or build this application
+### What is thae program is all about:
+
+This program is about applying basic image filters using OpenCV. I implemented:
+
+- Chaning Image to Grayscale
+- Adjusting Brightness
+- Adjusting Contrast
+- Adjusting Hue
+- Adjusting Saturation
+- Adjusting Vibarance
+- Adjusting Sharpness
+- Adjusting Blur
+- Adjusting Noise
+- Pixelating Image
+
+#### Note: You have to get wxWidgets and OpenCV built and ready to use before trying to compile or build this application, also make sure that cmake and makefile is installed on your system
 
 ### To Run this application:
 
