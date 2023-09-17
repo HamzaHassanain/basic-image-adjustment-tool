@@ -28,22 +28,29 @@ make
 
 ### How this project is structured:
 
-├── src
-│ ├── Constants
-│ │ ├── adjustmentType.h
-│ ├── Controllers
-│ ├── AdjustmentTypesConverter.cpp
-│ ├── ImageAdjustmentPanel.cpp
-| ├── ImageAdjustmentsEvent.cpp
-| ├── MainFrame.cpp
-├── public
-│ ├── css
-│ │ ├── \*\*/\*.css
-│ ├── images
-│ ├── js
-│ ├── index.html
-├── dist (or build
-├── node_modules
-├── package.json
-├── package-lock.json
-└── .gitignore
+#### All source files are in the src directory
+```
+src
+    ├── App.cpp
+    ├── Constants
+    │   └── adjustmentType.h
+    ├── Controllers
+    │   ├── AdjustmentTypesConverter.cpp
+    │   ├── ImageAdjustmentPanel.cpp
+    │   ├── ImageAdjustmentsEvent.cpp
+    │   └── MainFrame.cpp
+    ├── Interfaces
+    │   ├── AdjustmentData.h
+    │   ├── AdjustmentTypesConverter.h
+    │   ├── ImageAdjustmentPanel.h
+    │   ├── ImageAdjustmentsEvent.h
+    │   ├── ImageAdjustments.h
+    │   ├── MainFrame.h
+    │   └── Subscriber.h
+    └── Utils
+        ├── bufferedbitmap.h
+        ├── cv-wx-converter.h
+        ├── DataController.h
+        └── ImageUtils.h
+
+```
