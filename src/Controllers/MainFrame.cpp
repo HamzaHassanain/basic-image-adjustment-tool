@@ -16,12 +16,14 @@ void MainFrame::InitalizeComponents()
 
     panel = new wxPanel(this, wxID_ANY);
     adjustmentsPanel = new wxScrolled<wxPanel>(panel, wxID_ANY);
-    staticBitmap = new wxStaticBitmap(panel, wxID_ANY, wxBitmap(wxSize(1, 1)));
+    staticBitmap = new BufferedBitmap(panel, wxID_ANY, wxBitmap(wxSize(1, 1)));
     loadImageButton = new wxButton(panel, wxID_ANY, "Load Image");
     saveImageButton = new wxButton(panel, wxID_ANY, "Save Image");
     loadProjectButton = new wxButton(panel, wxID_ANY, "Load Project");
     saveProjectButton = new wxButton(panel, wxID_ANY, "Save Project");
     clearAdjustmentsButton = new wxButton(panel, wxID_ANY, "Clear Adjustments");
+    zoomInButton = new wxButton(panel, wxID_ANY, "Zoom In");
+    zoomOutButton = new wxButton(panel, wxID_ANY, "Zoom Out");
 
     isGrayScalePanel = new ImageAdjustmentPanel(adjustmentsPanel, this, "Gray Scale", 0, 0, AdjustmentType::isGrayScale);
     brightnessPanel = new ImageAdjustmentPanel(adjustmentsPanel, this, "Brightness", -255, 255, AdjustmentType::brightness);
@@ -45,6 +47,9 @@ void MainFrame::BindEvents()
     loadProjectButton->Bind(wxEVT_BUTTON, &MainFrame::OnLoadProjectButtonClick, this);
     saveProjectButton->Bind(wxEVT_BUTTON, &MainFrame::OnSaveProjectButtonClick, this);
     clearAdjustmentsButton->Bind(wxEVT_BUTTON, &MainFrame::OnClearAdjustmentsButtonClick, this);
+
+    zoomInButton->Bind(wxEVT_BUTTON, &MainFrame::OnZoomInButtonClick, this);
+    zoomOutButton->Bind(wxEVT_BUTTON, &MainFrame::OnZoomOutButtonClick, this);
 }
 void MainFrame::InitalizeSizers()
 {
@@ -54,6 +59,9 @@ void MainFrame::InitalizeSizers()
     panelSizer = new wxBoxSizer(wxHORIZONTAL);
     imageAdjustmentsSizer = new wxBoxSizer(wxVERTICAL);
     buttonsSizer = new wxBoxSizer(wxHORIZONTAL);
+
+    buttonsSizer->Add(zoomOutButton, 0, wxEXPAND | wxALL, 5);
+    buttonsSizer->Add(zoomInButton, 0, wxEXPAND | wxALL, 5);
 
     buttonsSizer->Add(loadImageButton, 0, wxEXPAND | wxALL, 5);
     buttonsSizer->Add(saveImageButton, 0, wxEXPAND | wxALL, 5);
@@ -261,4 +269,19 @@ void MainFrame::ResetSliders()
     blurPanel->SetSliderValue(imageData[AdjustmentType::blur]);
     noisePanel->SetSliderValue(imageData[AdjustmentType::noise]);
     pixelatePanel->SetSliderValue(imageData[AdjustmentType::pixelate]);
+}
+
+void MainFrame::OnZoomInButtonClick(wxCommandEvent &event)
+{
+    if (!displayImage.IsOk())
+        return;
+
+    staticBitmap->ZoomIn();
+}
+void MainFrame::OnZoomOutButtonClick(wxCommandEvent &event)
+{
+    if (!displayImage.IsOk())
+        return;
+
+    staticBitmap->ZoomOut();
 }

@@ -17,7 +17,7 @@ class MainFrame : Subscriber<ImageAdjustmentsEvent>, public wxFrame
     wxImage loadedImage;
     wxImage displayImage;
     std::string curImagePath;
-    wxStaticBitmap *staticBitmap;
+    BufferedBitmap *staticBitmap;
 
     wxPanel *panel;
     wxScrolled<wxPanel> *adjustmentsPanel;
@@ -27,6 +27,9 @@ class MainFrame : Subscriber<ImageAdjustmentsEvent>, public wxFrame
     wxButton *loadProjectButton;
     wxButton *saveProjectButton;
     wxButton *clearAdjustmentsButton;
+
+    wxButton *zoomInButton;
+    wxButton *zoomOutButton;
 
     wxSizer *mainSizer;
     wxSizer *panelSizer;
@@ -55,6 +58,8 @@ class MainFrame : Subscriber<ImageAdjustmentsEvent>, public wxFrame
     void OnSaveProjectButtonClick(wxCommandEvent &event);
     void OnClearAdjustmentsButtonClick(wxCommandEvent &event);
     void OnImageAdjustment(ImageAdjustmentsEvent &event);
+    void OnZoomInButtonClick(wxCommandEvent &event);
+    void OnZoomOutButtonClick(wxCommandEvent &event);
 
     void SetImageData();
     void DisplayImage();
