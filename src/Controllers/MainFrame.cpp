@@ -2,6 +2,7 @@
 #include "../Interfaces/ImageAdjustmentsEvent.h"
 #include "../Interfaces/AdjustmentTypesConverter.h"
 #include "../Utils/cv-wx-converter.h"
+#include "../Utils/ImageUtils.h"
 #include <iostream>
 
 MainFrame::MainFrame() : wxFrame(nullptr, wxID_ANY, "Simple Photo Editor")
@@ -24,19 +25,29 @@ void MainFrame::InitalizeComponents()
 
     isGrayScalePanel = new ImageAdjustmentPanel(adjustmentsPanel, this, "Gray Scale", 0, 0, AdjustmentType::isGrayScale);
     brightnessPanel = new ImageAdjustmentPanel(adjustmentsPanel, this, "Brightness", -255, 255, AdjustmentType::brightness);
-    contrastPanel = new ImageAdjustmentPanel(adjustmentsPanel, this, "Contrast", -100, 100, AdjustmentType::contrast);
-    saturationPanel = new ImageAdjustmentPanel(adjustmentsPanel, this, "Saturation", -100, 100, AdjustmentType::saturation);
-    emboosPanel = new ImageAdjustmentPanel(adjustmentsPanel, this, "Emboos", 0, 0, AdjustmentType::emboos);
-    huePanel = new ImageAdjustmentPanel(adjustmentsPanel, this, "Hue", -100, 100, AdjustmentType::hue);
-    vibarancePanel = new ImageAdjustmentPanel(adjustmentsPanel, this, "Vibarance", -100, 100, AdjustmentType::vibarance);
-    sharpnessPanel = new ImageAdjustmentPanel(adjustmentsPanel, this, "Sharpness", -100, 100, AdjustmentType::sharpness);
+    contrastPanel = new ImageAdjustmentPanel(adjustmentsPanel, this, "Contrast", -4, 4, AdjustmentType::contrast);
+    huePanel = new ImageAdjustmentPanel(adjustmentsPanel, this, "Hue", -255, 255, AdjustmentType::hue);
+    saturationPanel = new ImageAdjustmentPanel(adjustmentsPanel, this, "Saturation", -255, 255, AdjustmentType::saturation);
+    vibarancePanel = new ImageAdjustmentPanel(adjustmentsPanel, this, "Vibarance", -255, 255, AdjustmentType::vibarance);
+    emboosPanel = new ImageAdjustmentPanel(adjustmentsPanel, this, "Emboos", 0, 3, AdjustmentType::emboos);
+    sharpnessPanel = new ImageAdjustmentPanel(adjustmentsPanel, this, "Sharpness", 0, 2, AdjustmentType::sharpness);
     blurPanel = new ImageAdjustmentPanel(adjustmentsPanel, this, "Blur", 0, 10, AdjustmentType::blur);
-    noisePanel = new ImageAdjustmentPanel(adjustmentsPanel, this, "Noise", 0, 0, AdjustmentType::noise);
-    pixelatePanel = new ImageAdjustmentPanel(adjustmentsPanel, this, "Pixelate", 0, 0, AdjustmentType::pixelate);
-    gammaPanel = new ImageAdjustmentPanel(adjustmentsPanel, this, "Gamma", -100, 100, AdjustmentType::gamma);
+    noisePanel = new ImageAdjustmentPanel(adjustmentsPanel, this, "Noise", 0, 200, AdjustmentType::noise);
+    pixelatePanel = new ImageAdjustmentPanel(adjustmentsPanel, this, "Pixelate", 0, 200, AdjustmentType::pixelate);
 
     adjustmentsPanel->SetScrollRate(0, FromDIP(10));
+}
 
+void MainFrame::BindEvents()
+{
+    loadImageButton->Bind(wxEVT_BUTTON, &MainFrame::OnLoadImageButtonClick, this);
+    saveImageButton->Bind(wxEVT_BUTTON, &MainFrame::OnSaveImageButtonClick, this);
+    loadProjectButton->Bind(wxEVT_BUTTON, &MainFrame::OnLoadProjectButtonClick, this);
+    saveProjectButton->Bind(wxEVT_BUTTON, &MainFrame::OnSaveProjectButtonClick, this);
+    clearAdjustmentsButton->Bind(wxEVT_BUTTON, &MainFrame::OnClearAdjustmentsButtonClick, this);
+}
+void MainFrame::InitalizeSizers()
+{
     wxSizer *subSizer = new wxBoxSizer(wxVERTICAL);
 
     mainSizer = new wxBoxSizer(wxVERTICAL);
@@ -53,15 +64,14 @@ void MainFrame::InitalizeComponents()
     imageAdjustmentsSizer->Add(isGrayScalePanel, 0, wxEXPAND);
     imageAdjustmentsSizer->Add(brightnessPanel, 0, wxEXPAND | wxTOP, FromDIP(25));
     imageAdjustmentsSizer->Add(contrastPanel, 0, wxEXPAND | wxTOP, FromDIP(25));
-    imageAdjustmentsSizer->Add(saturationPanel, 0, wxEXPAND | wxTOP, FromDIP(25));
-    imageAdjustmentsSizer->Add(emboosPanel, 0, wxEXPAND | wxTOP, FromDIP(25));
     imageAdjustmentsSizer->Add(huePanel, 0, wxEXPAND | wxTOP, FromDIP(25));
+    imageAdjustmentsSizer->Add(saturationPanel, 0, wxEXPAND | wxTOP, FromDIP(25));
     imageAdjustmentsSizer->Add(vibarancePanel, 0, wxEXPAND | wxTOP, FromDIP(25));
+    imageAdjustmentsSizer->Add(emboosPanel, 0, wxEXPAND | wxTOP, FromDIP(25));
     imageAdjustmentsSizer->Add(sharpnessPanel, 0, wxEXPAND | wxTOP, FromDIP(25));
     imageAdjustmentsSizer->Add(blurPanel, 0, wxEXPAND | wxTOP, FromDIP(25));
     imageAdjustmentsSizer->Add(noisePanel, 0, wxEXPAND | wxTOP, FromDIP(25));
     imageAdjustmentsSizer->Add(pixelatePanel, 0, wxEXPAND | wxTOP, FromDIP(25));
-    imageAdjustmentsSizer->Add(gammaPanel, 0, wxEXPAND | wxTOP, FromDIP(25));
 
     subSizer->Add(buttonsSizer, 1, wxALIGN_RIGHT);
     subSizer->Add(staticBitmap, 10, wxEXPAND);
@@ -75,19 +85,8 @@ void MainFrame::InitalizeComponents()
     this->SetSizerAndFit(mainSizer);
 }
 
-void MainFrame::BindEvents()
-{
-    loadImageButton->Bind(wxEVT_BUTTON, &MainFrame::OnLoadImageButtonClick, this);
-    saveImageButton->Bind(wxEVT_BUTTON, &MainFrame::OnSaveImageButtonClick, this);
-    loadProjectButton->Bind(wxEVT_BUTTON, &MainFrame::OnLoadProjectButtonClick, this);
-    saveProjectButton->Bind(wxEVT_BUTTON, &MainFrame::OnSaveProjectButtonClick, this);
-    clearAdjustmentsButton->Bind(wxEVT_BUTTON, &MainFrame::OnClearAdjustmentsButtonClick, this);
-}
-void MainFrame::InitalizeSizers() {}
-
 void MainFrame::Notify(ImageAdjustmentsEvent &event)
 {
-    std::cout << "Notify" << std::endl;
     OnImageAdjustment(event);
 }
 
@@ -136,7 +135,7 @@ void MainFrame::OnSaveImageButtonClick(wxCommandEvent &event)
 }
 void MainFrame::OnLoadProjectButtonClick(wxCommandEvent &event)
 {
-    wxFileDialog openFileDialog(this, _("Open Project file"), "", "", "Project Files (*.prj)|*.prj", wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+    wxFileDialog openFileDialog(this, _("Open Project file"), "", "", PROJECT_FILE_TYPE, wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 
     if (openFileDialog.ShowModal() == wxID_CANCEL)
         return;
@@ -165,6 +164,12 @@ void MainFrame::OnSaveProjectButtonClick(wxCommandEvent &event)
     wxString filePath = saveFileDialog.GetPath();
     std::string path = filePath.ToStdString();
 
+    std::string end = path.substr(path.find_last_of(".") + 1);
+    if (end != "prj")
+    {
+        filePath += ".prj";
+        path += ".prj";
+    }
     DataController::Write(path, imageData, curImagePath);
 }
 void MainFrame::OnClearAdjustmentsButtonClick(wxCommandEvent &event)
@@ -181,27 +186,52 @@ void MainFrame::SetImageData()
     int grayScale = GetGrayScale(imageData[AdjustmentType::isGrayScale]);
     int brightness = GetBrightness(imageData[AdjustmentType::brightness]);
     int blur = GetBlur(imageData[AdjustmentType::blur]);
+    double contrast = GetContrast(imageData[AdjustmentType::contrast]);
+    int saturation = GetSaturation(imageData[AdjustmentType::saturation]);
+    int emboos = GetEmboos(imageData[AdjustmentType::emboos]);
+    int hue = GetHue(imageData[AdjustmentType::hue]);
+    int vibarance = GetVibarance(imageData[AdjustmentType::vibarance]);
+    int sharpness = GetSharpness(imageData[AdjustmentType::sharpness]);
+    int noise = GetNoise(imageData[AdjustmentType::noise]);
+    int pixelate = GetPixelate(imageData[AdjustmentType::pixelate]);
 
     displayImage = loadedImage.Copy();
-
-    cv::Mat mat = mat_from_wx(displayImage);
-    if (grayScale)
-        cv::cvtColor(mat, mat, cv::COLOR_BGR2GRAY);
-
-    if (brightness)
+    try
     {
-        int width = loadedImage.GetWidth();
-        int height = loadedImage.GetHeight();
 
-        mat += cv::Scalar(brightness, brightness, brightness);
+        cv::Mat mat = mat_from_wx(displayImage);
+
+        if (grayScale)
+            ApplayGrayScale(mat);
+        if (brightness)
+            ApplayBrightness(mat, brightness);
+        if (blur)
+            ApplayBlur(mat, blur);
+        if (contrast)
+            ApplayContrast(mat, contrast);
+        if (hue)
+            ApplayHue(mat, hue);
+        if (saturation)
+            ApplaySaturation(mat, saturation);
+        if (vibarance)
+            ApplayVibarance(mat, vibarance);
+        if (emboos)
+            ApplayEmboos(mat, emboos);
+        if (sharpness)
+            ApplaySharpness(mat, sharpness);
+        if (noise)
+            ApplayNoise(mat, noise);
+        if (pixelate)
+            ApplayPixlate(mat, pixelate);
+        if (noise)
+            ApplayNoise(mat, noise);
+
+        displayImage = wx_from_mat(mat);
     }
-
-    if (blur)
+    catch (cv::Exception &e)
     {
-        cv::blur(mat, mat, cv::Size(blur, blur));
+        std::cout << e.what() << std::endl;
     }
-
-    displayImage = wx_from_mat(mat);
 
     DisplayImage();
 }
@@ -231,5 +261,4 @@ void MainFrame::ResetSliders()
     blurPanel->SetSliderValue(imageData[AdjustmentType::blur]);
     noisePanel->SetSliderValue(imageData[AdjustmentType::noise]);
     pixelatePanel->SetSliderValue(imageData[AdjustmentType::pixelate]);
-    gammaPanel->SetSliderValue(imageData[AdjustmentType::gamma]);
 }

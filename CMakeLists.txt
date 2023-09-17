@@ -9,6 +9,7 @@ set(SOURCES
     src/Utils/bufferedbitmap.h
     src/Utils/cv-wx-converter.h
     src/Utils/DataController.h
+    src/Utils/ImageUtils.h
 
     src/Constants/adjustmentType.h                       
                                       

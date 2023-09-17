@@ -14,5 +14,4 @@ enum class AdjustmentType
     blur = 8,
     noise = 9,
     pixelate = 10,
-    gamma = 11,
 };

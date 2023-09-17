@@ -26,7 +26,6 @@ public:
         types.push_back(AdjustmentType::blur);
         types.push_back(AdjustmentType::noise);
         types.push_back(AdjustmentType::pixelate);
-        types.push_back(AdjustmentType::gamma);
 
         return types;
     }

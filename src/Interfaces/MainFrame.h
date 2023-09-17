@@ -1,7 +1,6 @@
 #include <wx/wx.h>
 #include <wx/colordlg.h>
 #include <wx/fontdlg.h>
-
 #include "ImageAdjustmentPanel.h"
 #include "ImageAdjustmentsEvent.h"
 #include "ImageAdjustments.h"
@@ -10,7 +9,7 @@
 #include <map>
 #include "Subscriber.h"
 const std::string ALLOWED_TYPES = "Image Files (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp";
-
+const std::string PROJECT_FILE_TYPE = "Project Files (*.prj)|*.prj";
 class MainFrame : Subscriber<ImageAdjustmentsEvent>, public wxFrame
 {
     std::map<AdjustmentType, AdjustmentData> imageData;
@@ -45,7 +44,6 @@ class MainFrame : Subscriber<ImageAdjustmentsEvent>, public wxFrame
     ImageAdjustmentPanel *blurPanel;
     ImageAdjustmentPanel *noisePanel;
     ImageAdjustmentPanel *pixelatePanel;
-    ImageAdjustmentPanel *gammaPanel;
 
     void InitalizeComponents();
     void InitalizeSizers();

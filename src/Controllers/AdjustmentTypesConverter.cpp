@@ -1,5 +1,5 @@
 #include "../Interfaces/AdjustmentTypesConverter.h"
-
+#include <iostream>
 int GetGrayScale(AdjustmentData data)
 {
     bool enabled = data.isApplied;
@@ -14,10 +14,13 @@ int GetBrightness(AdjustmentData data)
         return value;
     return 0;
 }
-int GetContrast(AdjustmentData data)
+double GetContrast(AdjustmentData data)
 {
     bool enabled = data.isApplied;
-    int value = data.value;
+    double value = data.value;
+    if (value < 0)
+        value = 1.0 / (-1.0 * value);
+
     if (enabled)
         return value;
     return 0;
@@ -25,7 +28,7 @@ int GetContrast(AdjustmentData data)
 int GetSaturation(AdjustmentData data)
 {
     bool enabled = data.isApplied;
-    int value = data.value;
+    double value = data.value;
     if (enabled)
         return value;
     return 0;
@@ -79,14 +82,6 @@ int GetNoise(AdjustmentData data)
     return 0;
 }
 int GetPixelate(AdjustmentData data)
-{
-    bool enabled = data.isApplied;
-    int value = data.value;
-    if (enabled)
-        return value;
-    return 0;
-}
-int GetGamma(AdjustmentData data)
 {
     bool enabled = data.isApplied;
     int value = data.value;

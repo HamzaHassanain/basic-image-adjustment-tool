@@ -37,7 +37,6 @@ void ImageAdjustmentPanel::OnSliderChange(wxCommandEvent &event)
 }
 void ImageAdjustmentPanel::EmitEvent()
 {
-    std::cout << "Event emmited" << std::endl;
     ImageAdjustmentsEvent event(this->adjustmentsType, this->GetValue());
     this->subscriber->Notify(event);
 }

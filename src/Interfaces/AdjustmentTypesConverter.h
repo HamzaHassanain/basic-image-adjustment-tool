@@ -3,7 +3,7 @@
 
 int GetGrayScale(AdjustmentData);
 int GetBrightness(AdjustmentData);
-int GetContrast(AdjustmentData);
+double GetContrast(AdjustmentData);
 int GetSaturation(AdjustmentData);
 int GetEmboos(AdjustmentData);
 int GetHue(AdjustmentData);
@@ -12,4 +12,4 @@ int GetSharpness(AdjustmentData);
 int GetBlur(AdjustmentData);
 int GetNoise(AdjustmentData);
 int GetPixelate(AdjustmentData);
-int GetGamma(AdjustmentData);
+double GetGamma(AdjustmentData);
