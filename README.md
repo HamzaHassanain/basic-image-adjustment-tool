@@ -2,8 +2,6 @@
 
 ### Note: You have to get wxWidgets and OpenCV built and ready to use before trying to compile or build this application
 
-### To Get
-
 ### To Run this application:
 
 ```
@@ -29,6 +27,7 @@ make
 ### How this project is structured:
 
 #### All source files are in the src directory
+
 ```
 src
     ├── App.cpp
@@ -52,5 +51,4 @@ src
         ├── cv-wx-converter.h
         ├── DataController.h
         └── ImageUtils.h
-
 ```
