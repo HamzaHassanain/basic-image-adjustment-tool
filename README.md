@@ -1,4 +1,4 @@
-# Simple Photo Editor
+# Basic Image Adjustment Tool
 
 ### What is thae program is all about:
 
