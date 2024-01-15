@@ -1,6 +1,7 @@
 # Basic Image Adjustment Tool
 
 ### What is the program is all about:
+#### [Showcase](https://www.linkedin.com/posts/hamza-hassanain-ha067_cpp-cppprogramming-gui-activity-7109149690566209536-NpST?utm_source=share&utm_medium=member_desktop) 
 
 This program is about applying basic image filters using OpenCV. I implemented:
 
